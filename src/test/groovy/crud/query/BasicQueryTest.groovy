@@ -28,7 +28,7 @@ class BasicQueryTest extends GroovyTestCase {
 		
 		assert db.inventory.find([$or: [
 				[type: 'book'],
-				[name: 'rice']]
+				[name: 'rice0']]
 		]).count() == 4
 		
 		assert db.inventory.find([type: 'food', $or: [
