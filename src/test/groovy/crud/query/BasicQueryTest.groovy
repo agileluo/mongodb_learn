@@ -72,4 +72,14 @@ class BasicQueryTest extends GroovyTestCase {
 		assert db.inventory.find(['children.city': 'sz', 'children.zipcode' : 421]).count() == 1
 		assert db.inventory.find([$elemMatch: [city:'sz', zipcode: 421]]).count() == 0
 	}
+	
+	void testResultProjection(){
+		db.inventory << ([type: 'food', prices: 5, name: 'rice']);
+		
+		assert db.inventory.findOne().name == 'rice'
+		assert db.inventory.findOne([:], [type:1]).name == null
+		assert db.inventory.findOne([:], [prices: 0]).name == 'rice'
+		assert db.inventory.findOne([:], [prices: 0]).prices == null
+		assert db.inventory.findOne([:], [prices: 0]).type == 'food'
+	}
 }
